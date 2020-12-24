@@ -24,7 +24,7 @@
       </b-form-group> 
       <b-button
      @click="add_note"
-       variant="primary">Submit</b-button>
+      type="submit" variant="primary"><h5>Submit</h5> <b-spinner v-if="loading" variant="light" label="Spinning"></b-spinner></b-button>
     </b-form>
     </b-col>
   </b-row>
@@ -40,11 +40,13 @@
     note_body:'',
     show_alert:false,
     alert_message:'',
+    loading:false,
       }
     },
     methods: {
      add_note:function()
      {
+       this.loading = true
     axios.post('https://shrouded-reaches-24700.herokuapp.com/api/notes', {
       'heading':this.note_heading,
       'tags':this.note_tags,
@@ -52,13 +54,18 @@
     }).then(res => {
    this.show_alert = true
    this.alert_message = res.data.message
+   this.loading = false
      this.note_heading = '';
      this.note_tags = '';
      this.note_body = '';
     })
     .catch(err =>{
     console.warn(err)
+    this.loading = false
+    this.show_alert = true
+    this.alert_message = err
     });
+    return false;
      },
     },
   }

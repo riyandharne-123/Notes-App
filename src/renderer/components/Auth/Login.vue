@@ -18,7 +18,7 @@
                     <label for="password" class="sr-only">Password</label>
                     <input type="password" name="password" v-model="form.password" id="password" class="form-control" placeholder="***********">
                   </div>
-                  <input name="login" id="login" class="btn btn-block login-btn mb-4"  @click="login" value="Login">
+                  <input name="login" id="login" class="btn btn-block login-btn mb-4" @click="login" value="Login"/>
                   <b-row>
                    <b-col align="center" v-if="login_load">
                      <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>

@@ -1,5 +1,4 @@
 # Notes-App
-find setup.exe file at root directory
 > An electron-vue project
 
 #### Build Setup

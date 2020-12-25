@@ -24,7 +24,7 @@
       </b-form-group> 
       <b-button
      @click="add_note"
-      type="submit" variant="primary"><h5>Submit</h5> <b-spinner v-if="loading" variant="light" label="Spinning"></b-spinner></b-button>
+     variant="primary"><h5>Submit</h5> <b-spinner v-if="loading" variant="light" label="Spinning"></b-spinner></b-button>
     </b-form>
     </b-col>
   </b-row>

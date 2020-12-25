@@ -35,9 +35,9 @@ height:100vh;
        note: '',
       }
     },
-    created()
+    mounted()
     {
-    axios.get(`https://shrouded-reaches-24700.herokuapp.com/api/notes/${this.note_id}`)
+       axios.get(`https://shrouded-reaches-24700.herokuapp.com/api/notes/${this.note_id}`)
       .then(res =>{
        this.note = res.data.note;
       })

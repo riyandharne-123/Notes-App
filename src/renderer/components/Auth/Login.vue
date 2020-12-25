@@ -70,7 +70,7 @@
         this.form.email = ''
         this.form.password = ''
       },
-                  //login function api
+      //login function api
       login:function()
       {
         this.login_error = false

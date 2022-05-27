@@ -6,7 +6,7 @@
 
 <script>
   export default {
-    name: 'task-manager'
+    name: 'task-manager',
   }
 </script>
 

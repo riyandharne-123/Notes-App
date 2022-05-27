@@ -20,7 +20,7 @@
    </router-link>
   <div class="media p-2">
   <div class="media-body">
-    <h4>{{note.heading}} <br> <small><i>Created on {{note.created_at}}</i></small></h4>
+    <h4>{{note.heading}} <br> <small><i>Created on {{Date(note.created_at)}}</i></small></h4>
     <p>
     <b-badge variant="dark" v-for="tag in JSON.parse(note.tags)" :key="tag" style="margin:2px;">
     {{tag}}

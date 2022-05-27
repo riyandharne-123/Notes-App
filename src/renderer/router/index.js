@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import axios from 'axios'
 import VueRouter from 'vue-router'
 //auth components
@@ -11,7 +10,6 @@ import EditNote from '../components/Main/NewNote/EditNote'
 import NotesList from '../components/Main/NotesList/NotesList'
 import ViewNote from '../components/Main/NotesList/ViewNote'
 //https://shrouded-reaches-24700.herokuapp.com
-Vue.use(VueRouter)  
 
 const routes = [
     {
@@ -68,7 +66,7 @@ const routes = [
 //auth guard
 router.beforeEach((to,from,next) => {
   const jwtToken = `Bearer ${localStorage.getItem('token')}`;
-window.axios.defaults.headers.common['authorization'] = jwtToken;
+  window.axios.defaults.headers.common['authorization'] = jwtToken;
   next();
 })
 

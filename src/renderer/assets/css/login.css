@@ -51,6 +51,7 @@ body {
     .login-card .form-control::placeholder {
       color: #919aa3; }
   .login-card .login-btn {
+    cursor: pointer !important;
     padding: 13px 20px 12px;
     background-color: #000;
     border-radius: 4px;

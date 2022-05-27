@@ -9,10 +9,12 @@
  </router-link>
 </h3>
 <hr>
-<b-badge variant="dark" v-for="tag in JSON.parse(note.tags)" :key="tag" style="margin:2px;">
-{{tag}}
-</b-badge>
-<hr>
+  <div v-if="note.tags != '[]'">
+    <b-badge variant="dark" v-for="tag in JSON.parse(note.tags)" :key="tag" style="margin:2px;">
+      {{tag}}
+    </b-badge>
+    <hr>
+  </div>
 <p v-html="note.body"></p>
 </b-col>
 </b-row>

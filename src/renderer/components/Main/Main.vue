@@ -23,6 +23,6 @@ import SideBar from './SideBar/SideBar';
 export default{
     components: {
       SideBar,
-    }
+    },
 }
 </script>

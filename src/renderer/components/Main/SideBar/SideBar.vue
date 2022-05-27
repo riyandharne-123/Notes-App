@@ -27,11 +27,10 @@
 <script>
   export default {
     methods: {
-        logout:function()
+      logout:function()
        {
-        localStorage.removeItem('token');
-          //routing to login page
-              this.$router.push('/');
+          localStorage.removeItem('token');
+          this.$router.push('/');
        }, 
     }
   }

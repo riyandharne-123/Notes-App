@@ -54,14 +54,22 @@
         login_error:false,
       }
     },
-    created(){
-    if(localStorage.getItem('token')!= null)
-    {
-      this.$router.push('/main/notes');
-    }
-    else{
-      this.$router.push('/');
-    }
+    mounted() {
+      if(localStorage.getItem('token') != null && localStorage.getItem('token') != '') {
+        axios.get('https://shrouded-reaches-24700.herokuapp.com/api/verify_user')
+        .then(res => {
+          if(res.data.api_token == localStorage.getItem('token'))
+          {
+            this.$router.push('/main/notes');
+            this.login_load = true
+          }
+        })
+        .catch(err => {
+          this.login_load = false
+          this.login_error = true
+          this.error_message = 'Session Expired!'
+        })
+      }
     },
     methods: {
       onReset(evt) {
@@ -75,20 +83,21 @@
       {
         this.login_error = false
         this.login_load = true
+
         axios.post('https://shrouded-reaches-24700.herokuapp.com/api/login', {
           'email':this.form.email,
           'password':this.form.password,
         }).then(res => {
           //console.dir(res)
-        localStorage.setItem('token',res.data.token);
-        //routing to admin panel
-        this.$router.push('/main/notes');
-        this.login_load = false
+          localStorage.setItem('token', res.data.token);
+          //routing to admin panel
+          this.$router.push('/main/notes');
+          this.login_load = false
         })
         .catch(err =>{
-         this.login_load = false
-         this.login_error = true
-         this.error_message = err.response.data.status
+          this.login_load = false
+          this.login_error = true
+          this.error_message = err.response.data.status
         });
        return false;
        }

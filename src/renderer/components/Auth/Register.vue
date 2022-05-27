@@ -45,7 +45,7 @@
                     required
                      >
                   </div>
-                  <input name="login" id="login" class="btn btn-block login-btn mb-4" @click="register" value="Register">
+                  <input name="login" id="login" class="btn btn-block login-btn mb-4" @click="register" value="Register"/>
                    <b-row>
                    <b-col align="center" v-if="login_load">
                      <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>

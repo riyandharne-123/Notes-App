@@ -1,3 +1,5 @@
+import dotenv from 'dotenv'
+dotenv.config()
 import Vue from 'vue'
 import axios from 'axios'
 import VueRouter from 'vue-router'

@@ -1,8 +1,10 @@
 <template>
 <b-container fluid>
 <br>
-    <b-alert v-model="show_alert" variant="success" dismissible>
-    {{alert_message}}
+    <b-alert v-model="show_alert" variant="danger" dismissible>
+      <ul>
+        <li v-for="error in alert_message">{{error}}</li>
+      </ul>
     </b-alert>
   <b-row>
     <b-col>
@@ -16,9 +18,6 @@
           required
         ></b-form-input>
       </b-form-group>
-      <b-form-group>
-         <b-form-tags input-id="tags-basic" v-model="note_tags"></b-form-tags>
-      </b-form-group> 
       <b-form-group>
          <wysiwyg v-model="note_body" />
       </b-form-group> 
@@ -35,37 +34,37 @@
  export default {
     data() {
       return {
-    note_heading:'',
-    note_tags:[],
-    note_body:'',
-    show_alert:false,
-    alert_message:'',
-    loading:false,
+        note_heading:'',
+        note_body:'',
+        show_alert:false,
+        alert_message: [],
+        loading:false,
       }
     },
     methods: {
      add_note:function()
      {
-       this.loading = true
-    axios.post('https://shrouded-reaches-24700.herokuapp.com/api/notes', {
-      'heading':this.note_heading,
-      'tags':this.note_tags,
-      'body':this.note_body,
-    }).then(res => {
-   this.show_alert = true
-   this.alert_message = res.data.message
-   this.loading = false
-     this.note_heading = '';
-     this.note_tags = '';
-     this.note_body = '';
-    })
-    .catch(err =>{
-    console.warn(err)
-    this.loading = false
-    this.show_alert = true
-    this.alert_message = err
-    });
-    return false;
+      this.alert_message = []
+      this.loading = true
+      axios.post(process.env.BASE_URL + '/notes', {
+        'title': this.note_heading,
+        'description': this.note_body,
+      }).then(res => {
+        this.$router.push(`/main/notes`);
+      })
+      .catch(err =>{
+        const errors = err.response.data.message
+        if(!Array.isArray(errors))
+        {
+          this.alert_message.push(errors)
+        } else {
+          errors.map(error => {
+            this.alert_message.push(error)
+          })
+        }
+        this.loading = false
+        this.show_alert = true
+      });
      },
     },
   }

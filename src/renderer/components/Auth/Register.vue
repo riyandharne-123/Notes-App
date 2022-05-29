@@ -51,9 +51,11 @@
                      <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
                    </b-col>
                    <b-col align="center" v-if="login_error">
-                        <b-alert show dismissible variant="danger">
-                        {{error_message}}
-                        </b-alert>
+                      <b-alert show dismissible variant="danger">
+                        <ul>
+                          <li v-for="error in error_message">{{error}}</li>
+                        </ul>
+                      </b-alert>
                    </b-col>
                   </b-row>
                 </form>
@@ -77,7 +79,7 @@
           password:'',
         },
         login_load:false,
-        error_message:'',
+        error_message:[],
         login_error:false,
       }
     },
@@ -85,24 +87,31 @@
    //register function api
     register:function()
     {
+      this.error_message = [] 
       this.login_error = false
       this.login_load = true
-      axios.post('https://shrouded-reaches-24700.herokuapp.com/api/register', {
+      axios.post(process.env.BASE_URL + '/auth/register', {
         'name':this.form.name,
         'email':this.form.email,
         'password':this.form.password,
       }).then(res => {
-      localStorage.setItem('token',res.data.token);
-      localStorage.setItem('loggedIn',true);
-      //routing to admin panel
-      this.$router.push('/main/notes')
-      this.login_load = false
+        localStorage.setItem('token',res.data.token);
+        localStorage.setItem('loggedIn',true);
+        this.$router.push('/main/notes')
+        this.login_load = false
       })
       .catch(err =>{
-        console.dir(err.response.data)
          this.login_load = false
          this.login_error = true
-         this.error_message = err
+         const errors = err.response.data.message
+          if(!Array.isArray(errors))
+          {
+            this.error_message.push(errors)
+          } else {
+            errors.map(error => {
+              this.error_message.push(error)
+            })
+          }
       });
       return false;
     },

@@ -3,19 +3,13 @@
 <b-row>
 <b-col cols="12" id="note">
 <br>
-<h3>{{note.heading}}
- <router-link :to='"/main/edit_note/"+note.id'>
+<h3>{{note.title}}
+ <router-link :to='"/main/edit_note/"+note._id'>
  <b-button pill variant="outline-warning">Edit Note <b-icon-pencil-square/></b-button>
  </router-link>
 </h3>
 <hr>
-  <div v-if="note.tags != '[]'">
-    <b-badge variant="dark" v-for="tag in JSON.parse(note.tags)" :key="tag" style="margin:2px;">
-      {{tag}}
-    </b-badge>
-    <hr>
-  </div>
-<p v-html="note.body"></p>
+<p v-html="note.description"></p>
 </b-col>
 </b-row>
 </b-container>
@@ -39,9 +33,9 @@ height:100vh;
     },
     mounted()
     {
-       axios.get(`https://shrouded-reaches-24700.herokuapp.com/api/notes/${this.note_id}`)
+       axios.get(process.env.BASE_URl + `/notes/${this.note_id}`)
       .then(res =>{
-       this.note = res.data.note;
+       this.note = res.data;
       })
       .catch(err =>{
         console.warn(err);

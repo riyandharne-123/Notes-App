@@ -28,12 +28,9 @@ const routes = [
       path: '/main',
       component: Main,
       beforeEnter: (to,from,next) => {
-        axios.get('https://shrouded-reaches-24700.herokuapp.com/api/verify_user')
+        axios.get(process.env.BASE_URL + '/auth/user')
         .then(res => {
-          if(res.data.api_token == localStorage.getItem('token'))
-          {
             next()
-          }
         })
         .catch(err => 
           next('/'))

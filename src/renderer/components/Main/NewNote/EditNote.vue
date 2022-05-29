@@ -1,6 +1,11 @@
 <template>
 <b-container fluid>
 <br>
+    <b-alert v-model="show_alert" variant="danger" dismissible>
+      <ul>
+        <li v-for="error in alert_message">{{error}}</li>
+      </ul>
+    </b-alert>
   <b-row>
     <b-col>
     <br>
@@ -13,9 +18,6 @@
           required
         ></b-form-input>
       </b-form-group>
-      <b-form-group>
-         <b-form-tags input-id="tags-basic" v-model="note_tags"></b-form-tags>
-      </b-form-group> 
       <b-form-group>
          <wysiwyg v-model="note_body" />
       </b-form-group> 
@@ -33,19 +35,19 @@
     data() {
       return {
         note_heading:'',
-        note_tags:'',
         note_body:'',
         note:'',
+        show_alert: false,
+        alert_message: [],
       }
     },
      created()
     {
-      axios.get(`https://shrouded-reaches-24700.herokuapp.com/api/notes/${this.$route.params.id}`)
+      axios.get(process.env.BASE_URL + `/notes/${this.$route.params.id}`)
       .then(res =>{
-        this.note = res.data.note;
-        this.note_heading = this.note.heading;
-        this.note_tags = JSON.parse(this.note.tags);
-        this.note_body = this.note.body;
+        this.note = res.data;
+        this.note_heading = this.note.title;
+        this.note_body = this.note.description;
       })
       .catch(err =>{
         console.warn(err);
@@ -54,18 +56,27 @@
     methods: {
      edit_note:function()
      {
-      axios.put(`https://shrouded-reaches-24700.herokuapp.com/api/notes/${this.$route.params.id}`, {
-        'heading':this.note_heading,
-        'tags':this.note_tags,
-        'body':this.note_body,
+      this.alert_message = []
+      axios.put(process.env.BASE_URL + `/notes/${this.$route.params.id}`, {
+        'title':this.note_heading,
+        'description':this.note_body,
       }).then(res => {
+        this.show_alert = false;
         this.note_heading = '';
-        this.note_tags = '';
         this.note_body = '';
         this.$router.push(`/main/notes/view_note/${this.$route.params.id}`);
       })
       .catch(err =>{
-        console.warn(err)
+        const errors = err.response.data.message
+        if(!Array.isArray(errors))
+        {
+          this.alert_message.push(errors)
+        } else {
+          errors.map(error => {
+            this.alert_message.push(error)
+          })
+        }
+        this.show_alert = true;
       });
      },
     },

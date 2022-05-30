@@ -66,7 +66,7 @@
         .catch(err => {
           this.login_load = false
           this.login_error = true
-          this.error_message = 'Session Expired!'
+          this.error_message.push('Session Expired!')
         })
       }
     },
@@ -100,9 +100,14 @@
           {
             this.error_message.push(errors)
           } else {
-            errors.map(error => {
-              this.error_message.push(error)
-            })
+            if(errors.length == 1)
+            {
+              this.error_message.push(errors)
+            } else {
+              errors.map(error => {
+                this.error_message.push(error)
+              })
+            }
           }
         });
        return false;

@@ -1,4 +1,6 @@
 'use strict'
+const dotenv = require('dotenv')
+dotenv.config()
 
 process.env.BABEL_ENV = 'main'
 

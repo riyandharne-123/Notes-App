@@ -1,5 +1,7 @@
 import { app, BrowserWindow } from 'electron'
-
+import dotenv from 'dotenv'
+dotenv.config()
+process.env.BASE_URL='https://notes-app-backend-api.herokuapp.com'
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html

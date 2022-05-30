@@ -1,5 +1,8 @@
 'use strict'
+const dotenv = require('dotenv')
+dotenv.config()
 
+process.env.BASE_URL='https://notes-app-backend-api.herokuapp.com'
 process.env.NODE_ENV = 'production'
 
 const { say } = require('cfonts')

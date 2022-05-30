@@ -1,5 +1,6 @@
 import dotenv from 'dotenv'
 dotenv.config()
+process.env.BASE_URL='https://notes-app-backend-api.herokuapp.com'
 import Vue from 'vue'
 import axios from 'axios'
 import VueRouter from 'vue-router'
